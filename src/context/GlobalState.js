@@ -6,6 +6,7 @@ const initailState = {
   contacts: [
     {
       id: 1,
+      cometID: "pawan01",
       fullName: "Pawan Singh",
       email: "pawankumarsingh200@gmail.com",
       company: "web access",
@@ -15,6 +16,7 @@ const initailState = {
     },
     {
       id: 2,
+      cometID: "kapish01",
       fullName: "Kapish Singh",
       email: "kapish@gmail.com",
       company: "fresher",
@@ -24,6 +26,7 @@ const initailState = {
     },
     {
       id: 3,
+      cometID: "ritesh01",
       fullName: "Ritesh Singh",
       email: "ritesh.singh@gmail.com",
       company: "test infotech",

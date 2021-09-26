@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { List, Grid } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
@@ -7,7 +7,6 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
-import CommentIcon from "@material-ui/icons/Comment";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
@@ -15,6 +14,8 @@ import { GlobalContext } from "../../context/GlobalState";
 import { Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ViewColumnIcon from "@material-ui/icons/ViewColumn";
+import Tooltip from "@material-ui/core/Tooltip";
+import EditIcon from "@mui/icons-material/Edit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,8 +53,11 @@ export default function CheckboxList(props) {
   };
 
   const handleViewContact = (data) => {
-    console.log("view", data);
     props.contactData(data);
+  };
+
+  const editContacthandler = (data) => {
+    props.editContact(data);
   };
 
   return (
@@ -118,6 +122,7 @@ export default function CheckboxList(props) {
               <Grid item xs={3}>
                 <ListItemText
                   id={labelId}
+                  style={{ marginTop: 10 }}
                   primary={
                     <React.Fragment>
                       <Typography
@@ -133,22 +138,39 @@ export default function CheckboxList(props) {
                 />
               </Grid>
               <Grid item xs={3}>
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="comments"
-                    onClick={() => removeContact(value.id)}
-                    style={{ marginRight: 20 }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="comments"
-                    onClick={() => handleViewContact(value)}
-                  >
-                    <ViewColumnIcon />
-                  </IconButton>
+                <ListItemSecondaryAction
+                  style={{ margin: "auto", paddingBottom: 15 }}
+                >
+                  <Tooltip title="Edit" arrow>
+                    <IconButton
+                      edge="end"
+                      aria-label="comments"
+                      onClick={() => editContacthandler(value.id)}
+                      style={{ marginRight: 20 }}
+                    >
+                      <EditIcon style={{ color: "blue" }} />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Tooltip title="Delete" arrow>
+                    <IconButton
+                      edge="end"
+                      aria-label="comments"
+                      onClick={() => removeContact(value.id)}
+                      style={{ marginRight: 20 }}
+                    >
+                      <DeleteIcon style={{ color: "red" }} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="View" arrow>
+                    <IconButton
+                      edge="end"
+                      aria-label="comments"
+                      onClick={() => handleViewContact(value)}
+                    >
+                      <ViewColumnIcon style={{ color: "green" }} />
+                    </IconButton>
+                  </Tooltip>
                 </ListItemSecondaryAction>
               </Grid>
             </Grid>

@@ -15,6 +15,21 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import AddIcon from "@material-ui/icons/Add";
 import { GlobalContext } from "../../context/GlobalState";
+import Chat from "../Chat/Chat";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const drawerWidth = 70;
 
@@ -70,6 +85,8 @@ const MenuBar = (props) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const menuContact = Boolean(contactMenu);
   const [name, setName] = useState("Pawan Singh");
+  const [cometID, setCometID] = useState("pawan01");
+  const [openChat, setOpenChat] = useState(false);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -93,8 +110,16 @@ const MenuBar = (props) => {
   };
 
   const changeNameHandler = (name) => {
-    console.log("event", name);
-    setName(name);
+    setName(name.fullName);
+    setCometID(name.cometID);
+  };
+
+  const handleChatModal = () => {
+    setOpenChat(true);
+  };
+
+  const handleChatClose = () => {
+    setOpenChat(false);
   };
 
   const menuId = "primary-search-account-menu";
@@ -157,13 +182,12 @@ const MenuBar = (props) => {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
     >
       {contacts.map((contact) => {
-        console.log("contact", contact);
         if (contact.fullName !== name)
           return (
             <MenuItem
               key={contact.id}
               value={contact.fullName}
-              onClick={() => changeNameHandler(contact.fullName)}
+              onClick={() => changeNameHandler(contact)}
             >
               {contact.fullName}
             </MenuItem>
@@ -188,11 +212,25 @@ const MenuBar = (props) => {
             >
               Add
             </Button>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            <IconButton
+              aria-label="show 4 new mails"
+              color="inherit"
+              onClick={handleChatModal}
+            >
               <Badge badgeContent={0} color="secondary">
                 <MailIcon style={{ fontSize: 20 }} />
               </Badge>
             </IconButton>
+            <Modal
+              open={openChat}
+              onClose={handleChatClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Chat uID={cometID} />
+              </Box>
+            </Modal>
             <Typography variant="h6" className={classes.contact}>
               {name}
             </Typography>
